@@ -1,0 +1,8 @@
+{
+    "name": "BackToBeer",
+    "version": "0.0.1",
+    "ignore": [],
+    "dependencies": {
+        "moment": "https://momentjs.com/downloads/moment.min.js"
+    }
+}
