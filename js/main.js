@@ -16,13 +16,13 @@ app.controller('BackToBeerController', function ($scope, $location) {
     $scope.values = [{
         days: "",
         hours: "",
-        min: "",
+        min: "", 
         seconds: "",
         percent: ""
     }];
 
     const START_DAY_COUNT = {
-        day: '28/03/2018',
+        day: '01/12/2017', 
         format: 'DD/MM/YYYY'
     };
     const MAY  = '05';
