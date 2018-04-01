@@ -20,7 +20,7 @@ app.controller('BackToBeerController', function ($scope, $location) {
         seconds: "",
         percent: ""
     }];
-
+    
     const START_DAY_COUNT = {
         day: '01/12/2017', 
         format: 'DD/MM/YYYY'
@@ -71,7 +71,7 @@ app.controller('BackToBeerController', function ($scope, $location) {
     function changedInterval() {
         setInterval(function () {
             applyChanged();
-        }, 2000);
+        }, 1000);
     }
     changedInterval();
 });
