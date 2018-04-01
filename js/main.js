@@ -28,9 +28,13 @@ app.controller('BackToBeerController', function ($scope, $location) {
     const MAY  = '05';
     
     let days, hours, min, seconds, percent;
+    let momentMay = moment(MAY  , 'MM');
     let momentCurrent = moment();
-    let momentMay = moment(MAY, 'MM');
-    
+
+    function setCurrentMoment() {
+        momentCurrent = moment();
+    }
+
     function getMilisecondsInterval() {
         return moment.duration(momentMay-momentCurrent, 'milliseconds');
     }
@@ -43,32 +47,31 @@ app.controller('BackToBeerController', function ($scope, $location) {
     }
 
     function setValues(interval) {
-        $scope.values[0]['days'] =  Math.floor(interval.asDays());
-        $scope.values[0]['hours'] =  Math.floor(interval.asHours() % 24);
-        $scope.values[0]['min'] =  Math.floor(interval.asMinutes() % 60); 
-        $scope.values[0]['seconds'] =  Math.floor(interval.asSeconds() % 60);
+        $scope.values[0]['days'] =  interval._data.days + ' Days';
+        $scope.values[0]['hours'] =  interval._data.hours  + ' hours';
+        $scope.values[0]['min'] =  interval._data.minutes + ' minutes'; 
+        $scope.values[0]['seconds'] =  interval._data.seconds  + ' seconds';
         $scope.values[0]['percent'] =  getPercentCountDown();
     }
 
     function changedValuesBySelector(){
         $("#inDivBar").attr("aria-valuenow", $scope.values[0]['percent']);
         $("#inDivBar").css("width", $scope.values[0]['percent'] + '%');
-        $("#labelBar").text($scope.values[0]['percent'].toFixed(5) + '%');
+        $("#labelBar").text($scope.values[0]['percent'].toFixed(4) + '%');
+    }
 
-        $("#dayscounter").find('p').text($scope.values[0]['days'] + ' Days');
-        $("#hourscounter").find('p').text($scope.values[0]['hours'] + ' Hours');
-        $("#mincounter").find('p').text($scope.values[0]['min'] + ' Minutes');
-        $("#secondscounter").find('p').text($scope.values[0]['seconds'] + ' Seconds');
+    function applyChanged(){
+        setCurrentMoment();
+        setValues(getMilisecondsInterval());
+        changedValuesBySelector();
+        changedInterval();
+        $scope.$apply();
     }
 
     function changedInterval() {
-
-        setValues(getMilisecondsInterval());
-        changedValuesBySelector();
-
         setInterval(function () {
-            changedInterval();
-        }, 1000);
+            applyChanged();
+        }, 2000);
     }
     changedInterval();
 });
